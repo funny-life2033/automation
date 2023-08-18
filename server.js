@@ -1,4 +1,5 @@
 require("dotenv").config();
+const bodyparser = require("body-parser");
 const express = require("express");
 const connectDB = require("./config/db");
 const cors = require("cors");
@@ -9,6 +10,9 @@ const authenticateDevice = require("./middleware/auth");
 connectDB();
 
 const app = express();
+
+app.use(bodyparser.urlencoded({ extended: true }));
+app.use(bodyparser.json());
 
 let corsOptions = {
   origin: "*",

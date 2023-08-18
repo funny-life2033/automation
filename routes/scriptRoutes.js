@@ -3,6 +3,7 @@ const router = express.Router();
 
 const { getScript } = require("../controller/script");
 
-router.post("/getScript", getScript);
+//GET /script/getScript
+router.get("/getScript", getScript);
 
 module.exports = router;

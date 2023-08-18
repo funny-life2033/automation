@@ -4,13 +4,10 @@ const bcrypt = require("bcryptjs");
 const request = async (req, res) => {
   const { id } = req.body;
 
-  const salt = await bcrypt.genSalt(10);
-  const hashedId = await bcrypt.hash(id, salt);
-
-  const isDeviceExists = await device.findOne({ id: hashedId });
+  const isDeviceExists = await device.findOne({ id: id });
 
   if (!isDeviceExists) {
-    await device.create({ id: hashedId, allowed: false });
+    await device.create({ id: id, allowed: false });
   } else if (isDeviceExists.allowed) {
     res.status(400).json({ message: "This device is already allowed!" });
   }
@@ -20,13 +17,10 @@ const request = async (req, res) => {
 const register = async (req, res) => {
   const { id } = req.body;
 
-  const salt = await bcrypt.genSalt(10);
-  const hashedId = await bcrypt.hash(id, salt);
-
-  const isDeviceExists = await device.findOne({ id: hashedId });
+  const isDeviceExists = await device.findOne({ id });
 
   if (!isDeviceExists) {
-    await device.create({ id: hashedId, allowed: true });
+    await device.create({ id, allowed: true });
   } else if (isDeviceExists.allowed) {
     res.status(400).json({ message: "This device is already allowed!" });
   } else {
